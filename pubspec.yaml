@@ -70,12 +70,6 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - path: .env.gujeuk
-      flavors: [gujeuk]
-    - path: assets/images/gujeuk/
-      flavors: [gujeuk]
-    - path: assets/icons/gujeuk/
-      flavors: [gujeuk]
     - path: assets/images/bubdong/
       flavors: [bubdong]
     - path: assets/icons/bubdong/
