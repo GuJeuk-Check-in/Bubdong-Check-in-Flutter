@@ -76,7 +76,7 @@ class RemoteUserRepository implements UserRepository {
   }
 
   /// SchoolType.high → 'HIGH' (검색 결과에서 받은 값을 그대로 돌려보냄)
-  // TODO(bubdong): 학교 안 다님·직접 입력(null)과 other일 때 보낼 값 백엔드 확인 중 (지금은 null)
+  // TODO(bubdong): 학교 안 다님(null)과 other일 때 보낼 값 백엔드 확인 중 (지금은 null)
   String? _toSchoolTypeValue(SchoolType? type) {
     return switch (type) {
       SchoolType.elementary => 'ELEMENTARY',

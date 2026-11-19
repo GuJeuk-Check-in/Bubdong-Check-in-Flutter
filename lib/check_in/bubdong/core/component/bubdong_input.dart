@@ -14,6 +14,8 @@ class BubdongInput extends StatefulWidget {
     this.keyboardType,
     this.inputFormatters,
     this.suffixText,
+    this.readOnly = false,
+    this.onTap,
   });
 
   final String? suffixText;
@@ -25,6 +27,8 @@ class BubdongInput extends StatefulWidget {
   final bool enabled;
   final String? Function(String?)? validator;
   final bool isLoading;
+  final bool readOnly; // 직접 입력 막기 (누르면 onTap)
+  final VoidCallback? onTap;
 
   @override
   State<BubdongInput> createState() => _BubdongInputState();
@@ -74,6 +78,8 @@ class _BubdongInputState extends State<BubdongInput> {
                 keyboardType: widget.keyboardType, // 받은 값을 실제 입력칸에 넘김
                 inputFormatters: widget.inputFormatters,
                 enabled: widget.enabled,
+                readOnly: widget.readOnly,
+                onTap: widget.onTap,
                 expands: true, // 고정 높이를 꽉 채움
                 maxLines: null,
                 textAlignVertical: TextAlignVertical.center,

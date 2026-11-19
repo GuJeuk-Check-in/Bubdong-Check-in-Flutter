@@ -97,7 +97,7 @@ class _ComputerApplyPageState extends State<ComputerApplyPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           BubdongPageHeader(
-            title: '${Facility.internet.label} 이용 신청서',
+            title: '컴퓨터 이용 신청서', // Figma 문구 (이용대장 이름 '인터넷'은 서버 매칭용이라 그대로)
             subtitle: '좌석과 사용 정보를 알려주세요',
           ),
           const SizedBox(height: BubdongLayout.applyHeaderToCardGap),

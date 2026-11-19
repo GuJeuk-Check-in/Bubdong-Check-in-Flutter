@@ -44,7 +44,7 @@ class RemoteGuestbookRepository implements GuestbookRepository {
     final json = response.data!;
     return GuestbookDetail(
       name: json['name'] as String,
-      forms: _toFormStatuses(json['purpose'] as List, nameKey: 'purposeName'),
+      forms: _toFormStatuses(json['purpose'] as List),
       organRemainTime: json['organRemainTime'] as int,
       purposeRemainTime: json['purposeRemainTime'] as int,
     );
@@ -60,30 +60,20 @@ class RemoteGuestbookRepository implements GuestbookRepository {
       '/check-in/purpose',
       data: {'logId': logId, 'purpose': purposeIds},
     );
-    // 이 응답은 신청서 이름 키가 purposeForm (상세조회는 purposeName)
-    return _toFormStatuses(
-      response.data!['purpose'] as List,
-      nameKey: 'purposeForm',
-    );
+    return _toFormStatuses(response.data!['purpose'] as List);
   }
 
   /// 서버 신청서 목록 → 앱의 ApplyFormStatus 목록 (모르는 값은 뺌)
-  List<ApplyFormStatus> _toFormStatuses(
-    List<dynamic> items, {
-    required String nameKey,
-  }) {
+  List<ApplyFormStatus> _toFormStatuses(List<dynamic> items) {
     return [
-      for (final item in items)
-        ?_toFormStatus(item as Map<String, dynamic>, nameKey: nameKey),
+      for (final item in items) ?_toFormStatus(item as Map<String, dynamic>),
     ];
   }
 
   /// 서버 신청서 하나 → 앱의 ApplyFormStatus (모르는 값이면 null로 뺌)
-  ApplyFormStatus? _toFormStatus(
-    Map<String, dynamic> json, {
-    required String nameKey,
-  }) {
-    final form = switch (json[nameKey]) {
+  ApplyFormStatus? _toFormStatus(Map<String, dynamic> json) {
+    // 상세조회·이용대장 수정 둘 다 신청서 이름 키가 purposeForm
+    final form = switch (json['purposeForm']) {
       'pcForm' => ApplyForm.pc,
       'pingForm' => ApplyForm.ping,
       'singForm' => ApplyForm.sing,

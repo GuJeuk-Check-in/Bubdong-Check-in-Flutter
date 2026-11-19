@@ -65,17 +65,16 @@ class _SignupExtraSecondPageState extends State<SignupExtraSecondPage> {
     if (school == null) return;
     _pickedSchool = school;
     _schoolController.text = school.name;
+    // TODO(bubdong): 무교는 schoolType null로 보내서 서버가 400(학교를 검색하여 선택해주세요)을 줄 수 있음, 백엔드 확인 중
     if (school.name == noSchoolName) _gradeController.text = '0'; // 학교 안 다님 → 학년 0
   }
 
   /// 이 화면에서 적은 값을 요청에 담아 동의 화면으로
   void _next() {
     final school = _schoolController.text.trim();
-    final picked = _pickedSchool;
     final request = widget.request.copyWith(
       school: school,
-      // 고른 뒤 칸을 직접 고쳤으면 종류를 모르니 보내지 않음
-      schoolType: picked?.name == school ? picked?.type : null,
+      schoolType: _pickedSchool?.type, // 학교 칸은 검색으로만 채워짐
       // 학교 안 다님이면 학년 칸을 고쳤어도 0 (명세: 무교 + 학년 0)
       grade: school == noSchoolName ? 0 : int.parse(_gradeController.text.trim()),
       address: _addressController.text.trim(),
@@ -114,6 +113,8 @@ class _SignupExtraSecondPageState extends State<SignupExtraSecondPage> {
                         label: '학교가 뭐야?',
                         hintText: '친구의 학교를 알려줘',
                         controller: _schoolController,
+                        readOnly: true, // 서버가 검색으로 고른 학교만 받음
+                        onTap: _searchSchool,
                       ),
                     ),
                     const SizedBox(width: BubdongSpacing.s20),

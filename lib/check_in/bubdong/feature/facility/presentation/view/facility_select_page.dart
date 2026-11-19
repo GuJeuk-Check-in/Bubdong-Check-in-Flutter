@@ -269,6 +269,14 @@ class _FacilitySelectPageState extends State<FacilitySelectPage>
   // TODO: API 연결 시 교체 (자리 없는 이용대장과 남은 시간)
   static const Map<Facility, int> _unavailable = {};
 
+  String? get _visitorName {
+    final guest = widget.guest;
+    if (guest != null) {
+      return guest.visitorType == VisitorType.child ? guest.name : null;
+    }
+    return widget.signUpRequest?.name;
+  }
+
   final _selected = <Facility>{}; // 고른 순서대로 들어감
 
   // 아이·어른 목록 중 서버에 있는 이용대장만 (순서는 Figma 순서 유지)
@@ -350,10 +358,10 @@ class _FacilitySelectPageState extends State<FacilitySelectPage>
         children: [
           BubdongPageHeader(
             title: '오늘 어떤 이용대장을 사용하시나요?',
-            // 방명록에서 아이를 눌렀을 때만 부제 (어른·새로 고르는 흐름은 없음)
-            subtitle: widget.guest?.visitorType == VisitorType.child
-                ? '${widget.guest!.name} 님, 이용할 이용대장을 모두 선택해주세요'
-                : null,
+            // 이름을 아는 흐름(방명록 아이·회원가입)만 부제. 다시 온 친구는 조회 응답에 이름이 없음
+            subtitle: _visitorName == null
+                ? null
+                : '$_visitorName 님, 이용할 이용대장을 모두 선택해주세요',
           ),
           const SizedBox(height: BubdongSpacing.s40),
           _buildGrid(rows),

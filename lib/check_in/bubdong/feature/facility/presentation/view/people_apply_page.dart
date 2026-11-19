@@ -91,8 +91,13 @@ class _PeopleApplyPageState extends State<PeopleApplyPage> {
 
   // Figma 문구 (이용대장마다 다름)
   String get _buttonLabel => switch (widget.facility) {
-    Facility.tableTennis => '탁구•포켓볼 신청하기',
+    Facility.tableTennis => '탁구·포켓볼 신청하기',
     _ => '${widget.facility.label} 신청하기',
+  };
+
+  String get _title => switch (widget.facility) {
+    Facility.tableTennis => '탁구·포켓볼 이용 신청서',
+    _ => '${widget.facility.label} 이용 신청서',
   };
 
   String get _guide => switch (widget.facility) {
@@ -109,7 +114,7 @@ class _PeopleApplyPageState extends State<PeopleApplyPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           BubdongPageHeader(
-            title: '${widget.facility.label} 이용 신청서',
+            title: _title,
             subtitle: '함께 이용하는 인원을 알려주세요',
           ),
           const SizedBox(height: BubdongLayout.applyHeaderToCardGap),
