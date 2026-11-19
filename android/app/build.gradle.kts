@@ -55,14 +55,6 @@ android {
 
     flavorDimensions += "app"
     productFlavors {
-        create("gujeuk") {
-            dimension = "app"
-            applicationIdSuffix = ".gujeuk"
-            manifestPlaceholders["appName"] = "구즉 체크인"
-            // 설치된 키오스크의 대기열이 사라지지 않게 applicationId는 바꾸지 않습니다.
-            // 키가 있으면 release를 그 키로 서명합니다. debug 빌드는 build type의 debug 키를 씁니다.
-            signingConfig = signingConfigs.getByName(if (hasReleaseKey) "release" else "debug")
-        }
         create("bubdong") {
             dimension = "app"
             applicationIdSuffix = ".bubdong"
